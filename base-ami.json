@@ -1,0 +1,53 @@
+{
+  "variables": {
+    "aws_access_key": "xxxxxxxxxxxxxxxxxxxxx",
+    "aws_secret_key": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+  },
+  
+    "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo wget -O - https://repo.saltstack.com/apt/debian/8/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -",
+        "sudo su -c 'echo \"deb http://repo.saltstack.com/apt/debian/8/amd64/latest jessie main\" >> /etc/apt/sources.list'",
+        "sudo apt-get update",
+        "sudo apt-get install -y software-properties-common",
+        "sudo apt-get install -y build-essential git",
+        "sudo apt-get install -y python python-dev python-setuptools",
+        "sudo apt-get install -y salt-minion",
+        "sudo wget https://bootstrap.pypa.io/get-pip.py",
+        "sudo python get-pip.py",
+        "sudo pip install ansible",
+        "mkdir /tmp/packer-provisioner-ansible-local"
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "playbooks/aws.yml"
+    }
+    ],
+  
+  "builders": [{
+    "type": "amazon-ebs",
+    "communicator": "ssh",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-east-1",
+    "source_ami": "ami-8b9a63e0",
+    "instance_type": "m3.large",
+    "associate_public_ip_address": "true",
+    "ami_virtualization_type": "hvm",
+    "ssh_username": "admin",
+    "ssh_password": "changeme1234!@#",
+    "ssh_keypair_name": "dev-ops",
+    "ssh_private_key_file": "/home/wesley/.ssh/dev-ops.pem",
+    "ami_block_device_mappings": [    
+        {
+            "device_name": "/dev/xvda",
+            "volume_size": "25"
+        }
+    ],
+    "ami_name": "aws-base-{{isotime}}"
+  }]
+
+}

@@ -1,0 +1,9 @@
+# file: postgresql/handlers/main.yml
+
+- name: postgresql | ensure ensure Postgres is installed
+  apt: pkg=postgresql state=installed update_cache=true
+  notify:
+    - Start Postgresql
+
+- name: Start Postgresql
+  service: name=postgresql state=started

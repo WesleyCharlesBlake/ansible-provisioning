@@ -1,0 +1,11 @@
+ssh_users:
+  - name: wesley
+    key: "{{ lookup('file', '../keys/wesley_id_rsa.pub') }}"
+  - name: greg
+    key: "{{ lookup('file', '../keys/greg_id_rsa.pub') }}"
+  - name: jenkins
+    key: "{{ lookup('file', '../keys/jenkins_id_rsa.pub') }}"
+
+system_users:
+  - name: jenkins
+    key: "{{ lookup('file', '../keys/www-data_id_rsa.pub') }}"

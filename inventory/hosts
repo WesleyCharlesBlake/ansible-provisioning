@@ -1,0 +1,35 @@
+## Hosts ##
+[local]
+1270.0.0.1
+
+[aws-web]
+web-1.aws.stratotechnology.com
+web-2.aws.stratotechnology.com
+
+[aws-app]
+app-1.aws.stratotechnology.com
+app-2.aws.stratotechnology.com
+app-3.aws.stratotechnology.com
+app-4.aws.stratotechnology.com
+app-5.aws.stratotechnology.com
+app-6.aws.stratotechnology.com
+app-7.aws.stratotechnology.com
+app-8.aws.stratotechnology.com
+
+
+[aws-db]
+db-1.aws.stratotechnology.com
+db-2.aws.stratotechnology.com
+
+[aws-staging]
+staging-1.aws.stratotechnology.com
+
+
+## Groups ##
+
+[aws:children]
+aws-web
+aws-app
+aws-db
+aws-staging
+

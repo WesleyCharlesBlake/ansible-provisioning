@@ -1,0 +1,33 @@
+# file: postgresql/tasks/main.yml
+- name: postgresql | ensure ensure Postgres is installed
+  apt: pkg=postgresql state=installed
+  tags: postgresql
+
+- name: PSQL | Check for existence of pg_hba.conf
+  stat:
+    path: "{{psql_dir}}/{{psql_ver}}/main/pg_hba.conf"
+
+- name: PSQL | Copy  pg_hba.conf in place.
+  template:
+   src: pg_hba.conf.j2
+   dest: "{{psql_dir}}/{{psql_ver}}/main/pg_hba.conf"
+   owner: root
+   group: root
+   mode: 0644
+
+- name: PSQL | Check for existence of postgresql.conf
+  stat:
+    path: "{{psql_dir}}/{{psql_ver}}/main/postgresql.conf"
+
+- name: PSQL | Copy  postgresql.conf in place.
+  template:
+   src: pg_hba.conf.j2
+   dest: "{{psql_dir}}/{{psql_ver}}/main/postgresql.conf"
+   owner: root
+   group: root
+   mode: 0644
+  notify:
+   - reload postgresql
+
+- name: reload postgresql
+  service: "name=postgresql state=reloaded"

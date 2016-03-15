@@ -1,0 +1,21 @@
+- name: Nginx | ensure ensure Nginx is installed
+  apt: pkg=nginx state=installed
+  tags: nginx
+
+- name: Nginx | Check for existence of Nginx configuration
+  stat:
+    path: "{{nginx_dir}}/nginx.conf"
+  register: nginx_config
+
+- name: Nginx | Copy nginx configuration in place.
+  template:
+   src: nginx.conf.j2
+   dest: "{{nginx_dir}}/nginx.conf"
+   owner: root
+   group: root
+   mode: 0644
+  notify:
+   - reload nginx
+
+- name: reload nginx
+  service: "name=nginx state=reloaded"

@@ -1,0 +1,32 @@
+- name: NOC | copy nagios.cfg
+  template: "src=nagios.cfg dest=/usr/local/nagios/etc/nagios.cfg"
+
+- name: NOC | copy resource.cfg
+  template: "src=resource.cfg dest=/usr/local/nagios/etc/resource.cfg"
+
+- name: NOC | copy nagios clients.cfg
+  template: "src=servers/clients.cfg dest=/usr/local/nagios/etc/servers/clients.cfg"
+
+- name: NOC | copy nagios commands.cfg
+  template: "src=objects/commands.cfg dest=/usr/local/nagios/etc/objects/commands.cfg"
+
+- name: NOC | copy nagios contacts.cfg
+  template: "src=objects/contacts.cfg dest=/usr/local/nagios/etc/objects/contacts.cfg"
+
+- name: NOC | copy nagios hostgroups.cfg
+  template: "src=objects/hostgroups.cfg dest=/usr/local/nagios/etc/objects/hostgroups.cfg"
+
+- name: NOC | copy nagios hosts.cfg
+  template: "src=objects/hosts.cfg dest=/usr/local/nagios/etc/objects/hosts.cfg"
+
+- name: NOC | copy nagios localhost.cfg
+  template: "src=objects/localhost.cfg dest=/usr/local/nagios/etc/objects/localhost.cfg"
+
+- name: NOC | copy nagios services.cfg
+  template: "src=objects/services.cfg dest=/usr/local/nagios/etc/objects/services.cfg"
+
+- name: NOC | copy nagios templates.cfg
+  template: "src=objects/templates.cfg dest=/usr/local/nagios/etc/objects/templates.cfg"
+
+- name: NOC | restart nagios
+  service: name=nagios state=restarted

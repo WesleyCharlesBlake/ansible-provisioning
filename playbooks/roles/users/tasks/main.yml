@@ -1,0 +1,30 @@
+- name: system | setup groups
+  group: name={{ item.name }} state=present
+  with_items: ssh_users
+
+- name: system | setup users
+  user: name={{ item.name }} group={{ item.name }} groups=sudo,root comment="{{ item.name }}" shell=/bin/bash state=present
+  with_items: ssh_users
+
+- name: system | Add ssh user keys 
+  authorized_key: user={{ item.name }} key="{{ item.key }}" state=present
+  with_items: ssh_users
+
+- name: system | setup groups
+  group: name={{ item.name }} state=present
+  with_items: system_users
+
+- name: system | setup users
+  user: name={{ item.name }} group={{ item.name }} comment="{{ item.name }}" shell=/bin/bash state=present
+  with_items: system_users
+
+- name: system | Add ssh user keys 
+  authorized_key: user={{ item.name }} key="{{ item.key }}" state=present
+  with_items: system_users
+
+
+
+
+
+
+

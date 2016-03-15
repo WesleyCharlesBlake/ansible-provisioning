@@ -1,0 +1,34 @@
+- name: ntp | ensure ntp is installed
+  apt: pkg=ntp state=installed
+  tags: ntp
+
+- name: ntp | ensure ntp is configured
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntpd
+  tags: ntp
+
+- name: ntp | ensure ntp is running and enabled
+  service: name=ntp state=running enabled=yes
+  tags: ntp
+
+- name: Ensure bash OpenSSL and libssl are the latest versions
+  apt: name={{ item }} update_cache=true state=latest
+  with_items:
+    - bash
+    - openssl
+    - libssl-dev
+    - libssl-doc
+    - default-jdk
+  tags: packages
+
+- name: Install base packages
+  apt: name={{ item }} update_cache=true force=yes state=installed
+  with_items:
+    - htop
+    - libpq-dev
+  tags: packages
+
+- name: Install virtualenv
+  pip: name=virtualenv
+  tags: packages

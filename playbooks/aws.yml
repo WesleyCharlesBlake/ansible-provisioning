@@ -1,0 +1,18 @@
+- hosts: aws-web
+  roles:
+    - common
+    - aws-web
+    - users
+
+- hosts: aws-app
+  roles:
+    - common
+    - aws-app
+    - nodejs
+    - users
+
+- hosts: aws-db
+  roles:
+    - common
+    - aws-db
+    - users

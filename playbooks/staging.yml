@@ -1,0 +1,4 @@
+- hosts: aws-staging
+  sudo: True
+  roles:
+  - aws-db
